@@ -1,0 +1,9 @@
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\bin\Debug\Recherche Fiche C.exe.config
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\bin\Debug\Recherche Fiche C.exe
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\bin\Debug\Recherche Fiche C.pdb
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche Fiche C.csprojResolveAssemblyReference.cache
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche_Fiche_C.Properties.Resources.resources
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche Fiche C.csproj.GenerateResource.Cache
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche Fiche C.exe
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche Fiche C.pdb
+c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche_Fiche_C.Form1.resources
