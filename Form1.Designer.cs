@@ -88,6 +88,7 @@
             this.pathButton.TabIndex = 1;
             this.pathButton.Text = "...";
             this.pathButton.UseVisualStyleBackColor = true;
+            this.pathButton.Click += new System.EventHandler(this.pathButton_Click);
             // 
             // flowLayoutPanel3
             // 
@@ -117,6 +118,7 @@
             this.okButton.TabIndex = 1;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // Form1
             // 
@@ -125,6 +127,7 @@
             this.ClientSize = new System.Drawing.Size(284, 97);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Choisir un dossier";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
