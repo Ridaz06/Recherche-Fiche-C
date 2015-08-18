@@ -18,6 +18,15 @@ namespace Recherche_Fiche_C
             public string Nom;
             public string Prenom;
             public string Lieu;
+            public string Url;
+
+            public Fiche(string nom, string prenom, string lieu, string url) : this()
+            {
+                this.Nom = nom;
+                this.Prenom = prenom;
+                this.Lieu = lieu;
+                this.Url = url;
+            }
 
             public Fiche(string nom, string prenom, string lieu) : this()
             {
@@ -28,9 +37,16 @@ namespace Recherche_Fiche_C
         }
 
         public List<Fiche> listFiche;
+        public List<Fiche> resultFiche;
+        public Bitmap ficheImage;
+        public Bitmap originalBitmap;
+        public int originalHeight;
+        public int originalWidth;
+
         public const int NOM = 0;
         public const int PRENOM = 1;
         public const int LIEU = 2;
+        public const int URL = 3;
 
 
         public SearchWIndow()
@@ -45,7 +61,8 @@ namespace Recherche_Fiche_C
             this.listView1.Columns.Add("Nom");
             this.listView1.Columns.Add("Prenom");
             this.listView1.Columns.Add("Lieu");
-            string[] arr = new string[3];
+            this.listView1.Columns.Add("Lien");
+            string[] arr = new string[4];
 
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] fichiers = dir.GetFiles();
@@ -76,15 +93,15 @@ namespace Recherche_Fiche_C
                                 arr[PRENOM] = file.Substring(arr[NOM].Length + 1);
                                 i = arr[PRENOM].IndexOf("_");
                                 arr[PRENOM] = arr[PRENOM].Substring(0, i);
-
-                                listFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU]));
+                                arr[URL] = fichier.FullName;
+                                listFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], arr[URL]));
                             }
                         } else
                         {
                             arr[LIEU] = "Inconnu";
                             arr[PRENOM] = file.Substring(arr[NOM].Length);
-
-                            listFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU]));
+                            arr[URL] = fichier.FullName;
+                            listFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], arr[URL]));
                         }
                     }
                 }
@@ -114,6 +131,7 @@ namespace Recherche_Fiche_C
             } else
             {
                 listView1.Items.Clear();
+                resultFiche = new List<Fiche>();
                 int count = 0;
                 progressBar1.Maximum = listFiche.Count;
                 Fiche recherche = new Fiche(nomText.Text, prenomText.Text, lieuText.Text);
@@ -137,10 +155,12 @@ namespace Recherche_Fiche_C
                             if (valid)
                             {
                                 count++;
-                                string[] arr = new string[3];
+                                string[] arr = new string[4];
                                 arr[NOM] = f.Nom;
                                 arr[PRENOM] = f.Prenom;
                                 arr[LIEU] = f.Lieu;
+                                arr[URL] = f.Url;
+                                resultFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], arr[URL]));
                                 ListViewItem itm = new ListViewItem(arr);
                                 listView1.Items.Add(itm);
                             }
@@ -158,6 +178,30 @@ namespace Recherche_Fiche_C
             }
         }
 
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+            MessageBox.Show(listView1.SelectedItems[0].Index.ToString());
+            ficheImage = new Bitmap(resultFiche[listView1.SelectedItems[0].Index].Url);
+            originalBitmap = ficheImage;
+            originalHeight = ficheImage.Height;
+            originalWidth = ficheImage.Width;
 
+            pictureBox1.Size = ficheImage.Size;
+            pictureBox1.Image = ficheImage;
+            pictureBox1.Size = ficheImage.Size;       
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void trackBar1_ValueChanged_1(object sender, EventArgs e)
+        {
+            ficheImage = new Bitmap(originalBitmap,
+    new Size(originalWidth * trackBar1.Value / 100, originalHeight * trackBar1.Value / 100));
+            pictureBox1.Image = ficheImage;
+            pictureBox1.Size = ficheImage.Size;
+        }
     }
 }

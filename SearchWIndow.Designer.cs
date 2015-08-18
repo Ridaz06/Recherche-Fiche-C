@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.searchTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
@@ -42,9 +42,9 @@
             this.nomText = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.searchButton = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.resultTab = new System.Windows.Forms.TabPage();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.optionsTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -53,23 +53,35 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pathText = new System.Windows.Forms.TextBox();
             this.pathButton = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.searchTab.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.resultTab.SuspendLayout();
+            this.optionsTab.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fontSizeBox)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.searchTab);
+            this.tabControl1.Controls.Add(this.resultTab);
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.optionsTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -77,16 +89,16 @@
             this.tabControl1.Size = new System.Drawing.Size(582, 462);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // searchTab
             // 
-            this.tabPage1.Controls.Add(this.tableLayoutPanel3);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(574, 436);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Rechercher une fiche";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.searchTab.Controls.Add(this.tableLayoutPanel3);
+            this.searchTab.Location = new System.Drawing.Point(4, 22);
+            this.searchTab.Name = "searchTab";
+            this.searchTab.Padding = new System.Windows.Forms.Padding(3);
+            this.searchTab.Size = new System.Drawing.Size(574, 436);
+            this.searchTab.TabIndex = 0;
+            this.searchTab.Text = "Rechercher une fiche";
+            this.searchTab.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel3
             // 
@@ -232,16 +244,16 @@
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
-            // tabPage2
+            // resultTab
             // 
-            this.tabPage2.Controls.Add(this.listView1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(574, 436);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Resultat de la recherche";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.resultTab.Controls.Add(this.listView1);
+            this.resultTab.Location = new System.Drawing.Point(4, 22);
+            this.resultTab.Name = "resultTab";
+            this.resultTab.Padding = new System.Windows.Forms.Padding(3);
+            this.resultTab.Size = new System.Drawing.Size(574, 436);
+            this.resultTab.TabIndex = 1;
+            this.resultTab.Text = "Resultat de la recherche";
+            this.resultTab.UseVisualStyleBackColor = true;
             // 
             // listView1
             // 
@@ -253,16 +265,17 @@
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
-            // tabPage3
+            // optionsTab
             // 
-            this.tabPage3.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(574, 436);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Option";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.optionsTab.Controls.Add(this.tableLayoutPanel1);
+            this.optionsTab.Location = new System.Drawing.Point(4, 22);
+            this.optionsTab.Name = "optionsTab";
+            this.optionsTab.Size = new System.Drawing.Size(574, 436);
+            this.optionsTab.TabIndex = 2;
+            this.optionsTab.Text = "Option";
+            this.optionsTab.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
             // 
@@ -356,6 +369,74 @@
             this.pathButton.UseVisualStyleBackColor = true;
             this.pathButton.Click += new System.EventHandler(this.pathButton_Click);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.tableLayoutPanel5);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(574, 436);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Voir fiche";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 1;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.panel1, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.trackBar1, 0, 2);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 3;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(574, 436);
+            this.tableLayoutPanel5.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(568, 20);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "label6";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 23);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(568, 378);
+            this.panel1.TabIndex = 1;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackBar1.Location = new System.Drawing.Point(3, 407);
+            this.trackBar1.Maximum = 150;
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(568, 26);
+            this.trackBar1.TabIndex = 2;
+            this.trackBar1.Value = 100;
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged_1);
+            // 
             // SearchWIndow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -367,19 +448,25 @@
             this.Text = "Chercher une fiche";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SearchWIndow_FormClosing);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.searchTab.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
+            this.resultTab.ResumeLayout(false);
+            this.optionsTab.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fontSizeBox)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -387,8 +474,8 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage resultTab;
+        private System.Windows.Forms.TabPage optionsTab;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -398,7 +485,7 @@
         private System.Windows.Forms.TextBox pathText;
         private System.Windows.Forms.Button pathButton;
         private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage searchTab;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -411,5 +498,11 @@
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
