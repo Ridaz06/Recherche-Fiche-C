@@ -36,77 +36,37 @@ namespace Recherche_Fiche_C
             }
         }
 
-        public List<Fiche> listFiche;
-        public List<Fiche> resultFiche;
-        public Bitmap ficheImage;
-        public Bitmap originalBitmap;
-        public int originalHeight;
-        public int originalWidth;
+        private List<Fiche> listFiche;
+        private List<Fiche> resultFiche;
+        private Bitmap ficheImage;
+        private Bitmap originalBitmap;
+        private int originalHeight;
+        private int originalWidth;
 
-        public const int NOM = 0;
-        public const int PRENOM = 1;
-        public const int LIEU = 2;
-        public const int URL = 3;
+        private const int NOM = 0;
+        private const int PRENOM = 1;
+        private const int LIEU = 2;
+        private const int URL = 3;
 
+        private const string VFICHE = "Voir la fiche";
 
         public SearchWIndow()
         {
             InitializeComponent();
         }
 
-        public SearchWIndow(String path)
+        public SearchWIndow(String path, List<Fiche> listFiche)
         {
             InitializeComponent();
+
+            this.listFiche = listFiche;
             this.pathText.Text = path;
             this.listView1.Columns.Add("Nom");
             this.listView1.Columns.Add("Prenom");
             this.listView1.Columns.Add("Lieu");
             this.listView1.Columns.Add("Lien");
-            string[] arr = new string[4];
-
-            DirectoryInfo dir = new DirectoryInfo(path);
-            FileInfo[] fichiers = dir.GetFiles();
-
-            listFiche = new List<Fiche>();
-
-            foreach (FileInfo fichier in fichiers)
-            {
-                if (fichier.Name.Contains(".jpg") || fichier.Name.Contains(".JPG"))
-                {
-                    int i = fichier.Name.IndexOf(".");
-                    string file = fichier.Name.Substring(0, i);
-
-                    if (file.Contains("("))
-                    {
-                        if ((i = file.IndexOf("(") ) != -1)
-                            file = file.Substring(0, i);
-                    }
-
-                    if ((i = file.IndexOf(" ")) != -1)
-                    {
-                        arr[NOM] = file.Substring(0, i);
-                        if (file.Contains("_")){
-                            if ((i = file.IndexOf("_")) != -1)
-                            {
-                                arr[LIEU] = file.Substring(i + 1);
-
-                                arr[PRENOM] = file.Substring(arr[NOM].Length + 1);
-                                i = arr[PRENOM].IndexOf("_");
-                                arr[PRENOM] = arr[PRENOM].Substring(0, i);
-                                arr[URL] = fichier.FullName;
-                                listFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], arr[URL]));
-                            }
-                        } else
-                        {
-                            arr[LIEU] = "Inconnu";
-                            arr[PRENOM] = file.Substring(arr[NOM].Length);
-                            arr[URL] = fichier.FullName;
-                            listFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], arr[URL]));
-                        }
-                    }
-                }
-            }
         }
+
 
         private void SearchWIndow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -130,6 +90,7 @@ namespace Recherche_Fiche_C
                 MessageBox.Show("Merci de remplir au minimum un champ.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } else
             {
+                progressBar1.Value = 0;
                 listView1.Items.Clear();
                 resultFiche = new List<Fiche>();
                 int count = 0;
@@ -167,20 +128,21 @@ namespace Recherche_Fiche_C
                         }
                     }
                 }
-                progressBar1.Value = 0;
+                listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                 if (count == 0)
                 {
                     MessageBox.Show("Il n'y aucun resultat", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 } else
                 {
                     MessageBox.Show("Il y'a " + count + " resultat(s)", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    tabControl1.SelectedIndex = 1;
                 }
+
             }
         }
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
-            MessageBox.Show(listView1.SelectedItems[0].Index.ToString());
             ficheImage = new Bitmap(resultFiche[listView1.SelectedItems[0].Index].Url);
             originalBitmap = ficheImage;
             originalHeight = ficheImage.Height;
@@ -188,20 +150,80 @@ namespace Recherche_Fiche_C
 
             pictureBox1.Size = ficheImage.Size;
             pictureBox1.Image = ficheImage;
-            pictureBox1.Size = ficheImage.Size;       
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void trackBar1_ValueChanged_1(object sender, EventArgs e)
-        {
-            ficheImage = new Bitmap(originalBitmap,
-    new Size(originalWidth * trackBar1.Value / 100, originalHeight * trackBar1.Value / 100));
-            pictureBox1.Image = ficheImage;
             pictureBox1.Size = ficheImage.Size;
+
+            tabControl1.SelectedIndex = 2;
+
+            label6.Text = "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom 
+                + " | Prenom: " + resultFiche[listView1.SelectedItems[0].Index].Prenom 
+                + " | Lieu: " + resultFiche[listView1.SelectedItems[0].Index].Lieu;
+        }
+
+
+
+        private void listerFiche(FileInfo[] fichiers)
+        {
+            string[] arr = new string[4];
+
+            foreach (FileInfo fichier in fichiers)
+            {
+                if (fichier.Name.Contains(".jpg") || fichier.Name.Contains(".JPG"))
+                {
+                    int i = fichier.Name.IndexOf(".");
+                    string file = fichier.Name.Substring(0, i);
+
+                    if (file.Contains("("))
+                    {
+                        if ((i = file.IndexOf("(")) != -1)
+                            file = file.Substring(0, i);
+                    }
+
+                    if ((i = file.IndexOf(" ")) != -1)
+                    {
+                        arr[NOM] = file.Substring(0, i);
+                        if (file.Contains("_"))
+                        {
+                            if ((i = file.IndexOf("_")) != -1)
+                            {
+                                arr[LIEU] = file.Substring(i + 1);
+
+                                arr[PRENOM] = file.Substring(arr[NOM].Length);
+                                if ((i = arr[PRENOM].IndexOf("_")) != -1)
+                                {
+                                    arr[PRENOM] = arr[PRENOM].Substring(0, i);
+                                    arr[URL] = fichier.FullName;
+                                    listFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], arr[URL]));
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            arr[LIEU] = "Inconnu";
+                            arr[PRENOM] = file.Substring(arr[NOM].Length);
+                            arr[URL] = fichier.FullName;
+                            listFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], arr[URL]));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void SearchWIndow_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void reinitButton_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.URL = "null";
+            Properties.Settings.Default.Save();
+            MessageBox.Show("Application reinitialisé", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

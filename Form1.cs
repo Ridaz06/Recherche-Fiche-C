@@ -16,6 +16,33 @@ namespace Recherche_Fiche_C
         public Form1()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.URL != "null")
+            {
+                string path = Properties.Settings.Default.URL;
+
+                if (path == "")
+                {
+                    MessageBox.Show("Le répertoire enregistré n'existe pas. Veuillez en choisir un autre.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (Directory.Exists(path))
+                {
+                    if (Directory.GetDirectories(path).Length == 0 && Directory.GetFiles(path).Length == 0)
+                    {
+                        MessageBox.Show("Le répertoire enregistré est vide. Veuillez en choisir un autre.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        loadingScreen w = new loadingScreen(path);
+                        this.Hide();
+                        w.ShowDialog();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Le répertoire enregistré n'existe pas. Veuillez en choisir un autre.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -35,9 +62,14 @@ namespace Recherche_Fiche_C
                     MessageBox.Show("Le répertoire est vide", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 } else
                 {
-                    SearchWIndow w = new SearchWIndow(pathText.Text);
-                    w.Show(this);
+                    if (saveCheckBox.Checked)
+                    {
+                        Properties.Settings.Default.URL = pathText.Text;
+                        Properties.Settings.Default.Save();
+                    }
+                    loadingScreen w = new loadingScreen(pathText.Text);
                     this.Hide();
+                    w.ShowDialog();
                 }
             } else
             {
