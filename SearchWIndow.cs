@@ -225,5 +225,30 @@ namespace Recherche_Fiche_C
         {
 
         }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if (pathText.Text == "")
+            {
+                MessageBox.Show("Veuillez choisir un dossier.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (Directory.Exists(pathText.Text))
+            {
+                if (Directory.GetDirectories(pathText.Text).Length == 0 && Directory.GetFiles(pathText.Text).Length == 0)
+                {
+                    MessageBox.Show("Le répertoire est vide", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                        Properties.Settings.Default.URL = pathText.Text;
+                        Properties.Settings.Default.Save();
+                    MessageBox.Show("Options sauvegardées", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Le répertoire n'existe pas", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

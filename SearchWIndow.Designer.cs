@@ -256,7 +256,7 @@
             this.resultTab.Padding = new System.Windows.Forms.Padding(3);
             this.resultTab.Size = new System.Drawing.Size(574, 433);
             this.resultTab.TabIndex = 1;
-            this.resultTab.Text = "Resultat de la recherche";
+            this.resultTab.Text = "Resultats de la recherche";
             this.resultTab.UseVisualStyleBackColor = true;
             // 
             // listView1
@@ -420,6 +420,7 @@
             this.saveButton.TabIndex = 4;
             this.saveButton.Text = "Enregistrer";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // SearchWIndow
             // 
