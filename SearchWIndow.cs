@@ -64,7 +64,6 @@ namespace Recherche_Fiche_C
             this.listView1.Columns.Add("Nom");
             this.listView1.Columns.Add("Prenom");
             this.listView1.Columns.Add("Lieu");
-            this.listView1.Columns.Add("Lien");
         }
 
 
@@ -81,6 +80,8 @@ namespace Recherche_Fiche_C
             {
                 pathText.Text = fbd.SelectedPath;
             }
+
+            
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -116,12 +117,11 @@ namespace Recherche_Fiche_C
                             if (valid)
                             {
                                 count++;
-                                string[] arr = new string[4];
+                                string[] arr = new string[3];
                                 arr[NOM] = f.Nom;
                                 arr[PRENOM] = f.Prenom;
                                 arr[LIEU] = f.Lieu;
-                                arr[URL] = f.Url;
-                                resultFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], arr[URL]));
+                                resultFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], f.Url));
                                 ListViewItem itm = new ListViewItem(arr);
                                 listView1.Items.Add(itm);
                             }
@@ -148,22 +148,39 @@ namespace Recherche_Fiche_C
             originalHeight = ficheImage.Height;
             originalWidth = ficheImage.Width;
 
-            pictureBox1.Size = ficheImage.Size;
-            pictureBox1.Image = ficheImage;
-            pictureBox1.Size = ficheImage.Size;
+            TabPage picTab = new TabPage("Fiche: " + "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom
+                + " | Prenom: " + resultFiche[listView1.SelectedItems[0].Index].Prenom);
+            TableLayoutPanel pan = new TableLayoutPanel();
+            pan.Dock = DockStyle.Fill;
+            pan.ColumnStyles.Add(new ColumnStyle(SizeType.Percent));
 
-            tabControl1.SelectedIndex = 2;
+            pan.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            Label text = new Label();
+            text.Text = "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom
+                + " | Prenom: " + resultFiche[listView1.SelectedItems[0].Index].Prenom
+                + " | Lieu: " + resultFiche[listView1.SelectedItems[0].Index].Lieu; ;
+            text.TextAlign = ContentAlignment.MiddleCenter;
+            text.Dock = DockStyle.Fill;
+            pan.Controls.Add(text, 1, pan.RowCount - 1);
 
-            label6.Text = "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom 
-                + " | Prenom: " + resultFiche[listView1.SelectedItems[0].Index].Prenom 
-                + " | Lieu: " + resultFiche[listView1.SelectedItems[0].Index].Lieu;
+            PictureBox picBox = new PictureBox();
+            picBox.Dock = DockStyle.Fill;
+            picBox.SizeMode = PictureBoxSizeMode.Zoom;
+            picBox.Image = ficheImage;
+
+            pan.Controls.Add(picBox);
+
+            picTab.Controls.Add(pan);
+            tabControl1.TabPages.Add(picTab);
+
+            tabControl1.SelectedIndex = tabControl1.TabCount - 1;
         }
 
 
 
         private void listerFiche(FileInfo[] fichiers)
         {
-            string[] arr = new string[4];
+            string[] arr = new string[3];
 
             foreach (FileInfo fichier in fichiers)
             {
@@ -248,6 +265,38 @@ namespace Recherche_Fiche_C
             else
             {
                 MessageBox.Show("Le répertoire n'existe pas", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
+            e.Graphics.DrawString(this.tabControl1.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
+            e.DrawFocusRectangle();
+        }
+
+        private void tabControl1_MouseDown(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < this.tabControl1.TabPages.Count; i++)
+            {
+                Rectangle r = tabControl1.GetTabRect(i);
+                Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 15, 15);
+                if (closeButton.Contains(e.Location))
+                {
+                    if (i < 3)
+                    {
+                        MessageBox.Show("Impossiblde de fermet cet onglet", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    } else
+                    {
+                        if (MessageBox.Show("Voulez-vous fermer cet onglet ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            this.tabControl1.TabPages.RemoveAt(i);
+                            break;
+                        }
+
+                    }
+
+                }
             }
         }
     }

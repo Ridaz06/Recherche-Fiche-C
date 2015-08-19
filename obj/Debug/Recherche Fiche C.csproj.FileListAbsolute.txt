@@ -9,3 +9,7 @@ c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche
 c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche_Fiche_C.Form1.resources
 c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche_Fiche_C.SearchWIndow.resources
 c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche_Fiche_C.loadingScreen.resources
+C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\bin\Debug\Recherche Fiche C.exe.manifest
+C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\bin\Debug\Recherche Fiche C.application
+C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche Fiche C.exe.manifest
+C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche Fiche C.application
