@@ -67,6 +67,8 @@ namespace Recherche_Fiche_C
                         Properties.Settings.Default.URL = pathText.Text;
                         Properties.Settings.Default.Save();
                     }
+
+
                     loadingScreen w = new loadingScreen(pathText.Text);
                     this.Hide();
                     w.ShowDialog();

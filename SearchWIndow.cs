@@ -273,7 +273,20 @@ namespace Recherche_Fiche_C
                 }
                 else
                 {
-                        Properties.Settings.Default.URL = pathText.Text;
+                    DirectoryInfo dir = new DirectoryInfo(pathText.Text);
+                    FileInfo[] fichiers = dir.GetFiles();
+                    DirectoryInfo[] dossiers = dir.GetDirectories();
+
+                    listFiche = new List<SearchWIndow.Fiche>();
+                    listerFiche(fichiers);
+
+                    foreach (DirectoryInfo dossier in dossiers)
+                    {
+                        fichiers = dossier.GetFiles();
+                        listerFiche(fichiers);
+                    }
+
+                    Properties.Settings.Default.URL = pathText.Text;
                         Properties.Settings.Default.Save();
                     MessageBox.Show("Options sauvegardées", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
