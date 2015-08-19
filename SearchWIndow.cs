@@ -64,6 +64,21 @@ namespace Recherche_Fiche_C
             this.listView1.Columns.Add("Nom");
             this.listView1.Columns.Add("Prenom");
             this.listView1.Columns.Add("Lieu");
+
+            if (Properties.Settings.Default.FirstLunch)
+            {
+                Properties.Settings.Default.FirstLunch = false;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("Afin d'avoir des recherches rapides veuillez eviter d'utiliser des " +
+                                 "mots clefs court comme par exemple \"a\".\n" +
+                                 "Vous pouvez changer de répertoire dans l'onglet \"Options\" en pensant à bien " + 
+                                 "cliquer sur le bouton \"Sauvegarder\". ", "Ionformation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            if (listFiche.Count == 0)
+            {
+                MessageBox.Show("Aucune fiche trouvé dans le répertoire choisie merci de changer de répertoire dans l'onglet \"Options\"", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
 
@@ -234,6 +249,7 @@ namespace Recherche_Fiche_C
         private void reinitButton_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.URL = "null";
+            Properties.Settings.Default.FirstLunch = true;
             Properties.Settings.Default.Save();
             MessageBox.Show("Application reinitialisé", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

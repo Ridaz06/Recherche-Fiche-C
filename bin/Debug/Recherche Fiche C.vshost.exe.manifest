@@ -42,24 +42,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Recherche Fiche C.exe" size="27136">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Recherche Fiche C.exe" size="28160">
       <assemblyIdentity name="Recherche Fiche C" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hd2Qo5NvG0sqDX7kaBJ/Ftv2wOiRdgL+TmGnrUUmuSI=</dsig:DigestValue>
+        <dsig:DigestValue>2VuuPvwmSm4phPhRx81jbqXMtNJ/fqChPIF576SFgx0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Recherche Fiche C.exe.config" size="942">
+  <file name="Recherche Fiche C.exe.config" size="1065">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ZcNI959KhnEvM9x9Cqn1NCl3dK3+gwKl/VnbSUdZtr0=</dsig:DigestValue>
+      <dsig:DigestValue>+LPpzZRV4+6NseH5lRANStdX45TWjOcOMQUfRDuvNyc=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

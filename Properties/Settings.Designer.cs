@@ -34,5 +34,17 @@ namespace Recherche_Fiche_C.Properties {
                 this["URL"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FirstLunch {
+            get {
+                return ((bool)(this["FirstLunch"]));
+            }
+            set {
+                this["FirstLunch"] = value;
+            }
+        }
     }
 }
