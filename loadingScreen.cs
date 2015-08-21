@@ -29,26 +29,6 @@ namespace Recherche_Fiche_C
             this.path = path;
         }
 
-        private void loadingScreen_Load(object sender, EventArgs e)
-        {
-            DirectoryInfo dir = new DirectoryInfo(path);
-            FileInfo[] fichiers = dir.GetFiles();
-            DirectoryInfo[] dossiers = dir.GetDirectories();
-
-            listFiche = new List<SearchWIndow.Fiche>();
-            listerFiche(fichiers);
-
-            foreach (DirectoryInfo dossier in dossiers)
-            {
-                fichiers = dossier.GetFiles();
-                listerFiche(fichiers);
-            }
-
-            SearchWIndow w = new SearchWIndow(path, listFiche);
-            this.Hide();
-            w.ShowDialog();
-        }
-
         private void listerFiche(FileInfo[] fichiers)
         {
             string[] arr = new string[4];
@@ -98,6 +78,32 @@ namespace Recherche_Fiche_C
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            DirectoryInfo dir = new DirectoryInfo(path);
+            FileInfo[] fichiers = dir.GetFiles();
+            DirectoryInfo[] dossiers = dir.GetDirectories();
+
+            listFiche = new List<SearchWIndow.Fiche>();
+            listerFiche(fichiers);
+
+            foreach (DirectoryInfo dossier in dossiers)
+            {
+                fichiers = dossier.GetFiles();
+                listerFiche(fichiers);
+            }
+
+            SearchWIndow w = new SearchWIndow(path, listFiche);
+            this.Hide();
+            w.ShowDialog();
+        }
+        private void loadingScreen_Shown(object sender, EventArgs e)
         {
 
         }

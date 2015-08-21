@@ -61,6 +61,8 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changerDeRépertoireToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.reinitialiserApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.listeFicheTab = new System.Windows.Forms.TabControl();
             this.tabControl1.SuspendLayout();
             this.searchTab.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -71,12 +73,14 @@
             this.affineGroupBox.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.searchTab);
             this.tabControl1.Controls.Add(this.resultTab);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -437,6 +441,25 @@
             this.reinitialiserApplicationToolStripMenuItem.Text = "Reinitialiser application";
             this.reinitialiserApplicationToolStripMenuItem.Click += new System.EventHandler(this.reinitialiserApplicationToolStripMenuItem_Click);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.listeFicheTab);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(568, 402);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Liste des fiches";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // listeFicheTab
+            // 
+            this.listeFicheTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listeFicheTab.Location = new System.Drawing.Point(0, 0);
+            this.listeFicheTab.Name = "listeFicheTab";
+            this.listeFicheTab.SelectedIndex = 0;
+            this.listeFicheTab.Size = new System.Drawing.Size(568, 402);
+            this.listeFicheTab.TabIndex = 0;
+            // 
             // SearchWIndow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -448,6 +471,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chercher une fiche";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SearchWIndow_FormClosing);
+            this.Shown += new System.EventHandler(this.SearchWIndow_Shown);
             this.tabControl1.ResumeLayout(false);
             this.searchTab.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -463,6 +487,7 @@
             this.tableLayoutPanel6.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -502,5 +527,7 @@
         private System.Windows.Forms.ToolStripMenuItem changerDeRépertoireToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem reinitialiserApplicationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem répertoireActuelToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabControl listeFicheTab;
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Recherche_Fiche_C
 {
@@ -40,6 +41,7 @@ namespace Recherche_Fiche_C
         // -- Variables globales -- //
         private List<Fiche> listFiche;
         private List<Fiche> resultFiche;
+        private List<ListView> listViewList;
         private Bitmap ficheImage;
         private Bitmap originalBitmap;
         private string path;
@@ -89,6 +91,7 @@ namespace Recherche_Fiche_C
                 Properties.Settings.Default.Save();
                 Application.Restart();
             }
+           
         }
 
 
@@ -372,6 +375,44 @@ namespace Recherche_Fiche_C
         private void répertoireActuelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Répertoire actuel:\n" + this.path, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void SearchWIndow_Shown(object sender, EventArgs e)
+        {
+
+            int i = 0;
+            listViewList = new List<ListView>();
+            for (char c = 'A'; c <= 'Z'; c++)
+            {
+                listViewList.Add(new ListView());
+                TabPage tab = new TabPage(c.ToString());
+                tab.Controls.Add(listViewList[i]);
+                listeFicheTab.TabPages.Add(tab);
+
+                listViewList[i].Columns.Add("Nom");
+                listViewList[i].Columns.Add("Prenom");
+                listViewList[i].Columns.Add("Lieu");
+                listViewList[i].Dock = DockStyle.Fill;
+                listViewList[i].View = View.Details;
+                listViewList[i].FullRowSelect = true;
+                i++;
+            }
+
+            foreach (Fiche f in listFiche)
+            {
+                char c = f.Nom.ToUpper().ElementAt(0);
+                int index = c - 65;
+                string[] arr = new string[3];
+                arr[NOM] = f.Nom;
+                arr[PRENOM] = f.Prenom;
+                arr[LIEU] = f.Lieu;
+
+                ListViewItem itm = new ListViewItem(arr);
+                listViewList[index].Items.Add(itm);
+            }
+
+            for (int c = 'A'; c <= 'Z'; c++)
+                listViewList[c - 65].AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
     }
 }
