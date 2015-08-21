@@ -108,10 +108,32 @@ namespace Recherche_Fiche_C
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
+
             ficheImage = new Bitmap(resultFiche[listView1.SelectedItems[0].Index].Url);
             originalBitmap = ficheImage;
             originalHeight = ficheImage.Height;
             originalWidth = ficheImage.Width;
+
+            // Creation d'un bouton permetant d'enregistrer l'image
+            Button but = new Button();
+            but.Text = "Enregistrer l'image";
+            but.AutoSize = true;
+            but.Anchor = AnchorStyles.None;
+            but.Click += (s, ee) =>
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "JPG  Image |*.jpg";
+                sfd.Title = "Sauvegarder la fiche";
+                sfd.FileName = resultFiche[listView1.SelectedItems[0].Index].Nom
+                + "_" + resultFiche[listView1.SelectedItems[0].Index].Prenom
+                + "_" + resultFiche[listView1.SelectedItems[0].Index].Lieu;
+                sfd.RestoreDirectory = true;
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    
+                    ficheImage.Save(sfd.OpenFile(), System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+            };
 
             // Creation d'un nouvelle onglet
             TabPage picTab = new TabPage("Fiche: " + "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom
@@ -124,10 +146,11 @@ namespace Recherche_Fiche_C
             Label text = new Label();
             text.Text = "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom
                 + " | Prenom: " + resultFiche[listView1.SelectedItems[0].Index].Prenom
-                + " | Lieu: " + resultFiche[listView1.SelectedItems[0].Index].Lieu; ;
+                + " | Lieu: " + resultFiche[listView1.SelectedItems[0].Index].Lieu;
             text.TextAlign = ContentAlignment.MiddleCenter;
             text.Dock = DockStyle.Fill;
             pan.Controls.Add(text, 1, pan.RowCount - 1);
+            pan.Controls.Add(but, 1, pan.RowCount - 1);
 
             PictureBox picBox = new PictureBox();
             picBox.Dock = DockStyle.Fill;
@@ -212,6 +235,7 @@ namespace Recherche_Fiche_C
                 Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 15, 15);
                 if (closeButton.Contains(e.Location))
                 {
+                    //Si ce n'est pas l'onglet de recherche ou de resultat on demande la confirmation de la fermeture
                     if (i > 1)
                     {
                         if (MessageBox.Show("Voulez-vous fermer cet onglet ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
