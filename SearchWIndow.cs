@@ -13,6 +13,7 @@ namespace Recherche_Fiche_C
 {
     public partial class SearchWIndow : Form
     {
+        // -- Structure -- //
         public struct Fiche
         {
             public string Nom;
@@ -36,13 +37,16 @@ namespace Recherche_Fiche_C
             }
         }
 
+        // -- Variables globales -- //
         private List<Fiche> listFiche;
         private List<Fiche> resultFiche;
         private Bitmap ficheImage;
         private Bitmap originalBitmap;
+        private string path;
         private int originalHeight;
         private int originalWidth;
 
+        // -- Constantes --//
         private const int NOM = 0;
         private const int PRENOM = 1;
         private const int LIEU = 2;
@@ -59,25 +63,28 @@ namespace Recherche_Fiche_C
         {
             InitializeComponent();
 
+            this.path = path;
             this.listFiche = listFiche;
-            this.pathText.Text = path;
-            this.listView1.Columns.Add("Nom");
-            this.listView1.Columns.Add("Prenom");
-            this.listView1.Columns.Add("Lieu");
+            this.listView1.View = View.Details;
+            this.listView1.Columns.Add("Nom", -2, HorizontalAlignment.Center);
+            this.listView1.Columns.Add("Prenom", -2, HorizontalAlignment.Center);
+            this.listView1.Columns.Add("Lieu", -2, HorizontalAlignment.Center);
+            this.listView1.FullRowSelect = true;
 
+            // Premier lancement de l'application
             if (Properties.Settings.Default.FirstLunch)
             {
                 Properties.Settings.Default.FirstLunch = false;
                 Properties.Settings.Default.Save();
                 MessageBox.Show("Afin d'avoir des recherches rapides veuillez eviter d'utiliser des " +
                                  "mots clefs court comme par exemple \"a\".\n" +
-                                 "Vous pouvez changer de répertoire dans l'onglet \"Options\" en pensant à bien " + 
-                                 "cliquer sur le bouton \"Sauvegarder\". ", "Ionformation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                 "Vous pouvez changer de répertoire dans le menu \"Options\". ", "Ionformation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
+            // Si aucune fiche n'est trouvé
             if (listFiche.Count == 0)
             {
-                MessageBox.Show("Aucune fiche trouvé dans le répertoire choisie merci de changer de répertoire dans l'onglet \"Options\"", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Aucune fiche trouvé dans le répertoire choisie merci de changer de répertoire dans le menu \"Options\"", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -87,18 +94,6 @@ namespace Recherche_Fiche_C
             Application.Exit();
         }
 
-        private void pathButton_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            DialogResult result = fbd.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                pathText.Text = fbd.SelectedPath;
-            }
-
-            
-        }
-
         private void searchButton_Click(object sender, EventArgs e)
         {
             if (nomText.Text == "" && prenomText.Text == "" && lieuText.Text == "")
@@ -106,53 +101,8 @@ namespace Recherche_Fiche_C
                 MessageBox.Show("Merci de remplir au minimum un champ.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } else
             {
-                progressBar1.Value = 0;
-                listView1.Items.Clear();
-                resultFiche = new List<Fiche>();
-                int count = 0;
-                progressBar1.Maximum = listFiche.Count;
-                Fiche recherche = new Fiche(nomText.Text, prenomText.Text, lieuText.Text);
-                foreach (Fiche f in listFiche)
-                {
-                    progressBar1.Value++;
-                    bool valid = true;
-                    if (recherche.Nom != "")
-                        if (f.Nom.IndexOf(recherche.Nom, StringComparison.OrdinalIgnoreCase) < 0)
-                            valid = false;
-                    if (valid)
-                    {
-                        if (recherche.Prenom != "")
-                            if (f.Prenom.IndexOf(recherche.Prenom, StringComparison.OrdinalIgnoreCase) < 0)
-                                valid = false;
-                        if (valid)
-                        {
-                            if (recherche.Lieu != "")
-                                if (f.Lieu.IndexOf(recherche.Lieu, StringComparison.OrdinalIgnoreCase) < 0)
-                                    valid = false;
-                            if (valid)
-                            {
-                                count++;
-                                string[] arr = new string[3];
-                                arr[NOM] = f.Nom;
-                                arr[PRENOM] = f.Prenom;
-                                arr[LIEU] = f.Lieu;
-                                resultFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], f.Url));
-                                ListViewItem itm = new ListViewItem(arr);
-                                listView1.Items.Add(itm);
-                            }
-                        }
-                    }
-                }
-                listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                if (count == 0)
-                {
-                    MessageBox.Show("Il n'y aucun resultat", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                } else
-                {
-                    MessageBox.Show("Il y'a " + count + " resultat(s)", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    tabControl1.SelectedIndex = 1;
-                }
-
+                search(nomText.Text, prenomText.Text, lieuText.Text, listFiche);
+                affineGroupBox.Enabled = true;
             }
         }
 
@@ -163,6 +113,7 @@ namespace Recherche_Fiche_C
             originalHeight = ficheImage.Height;
             originalWidth = ficheImage.Width;
 
+            // Creation d'un nouvelle onglet
             TabPage picTab = new TabPage("Fiche: " + "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom
                 + " | Prenom: " + resultFiche[listView1.SelectedItems[0].Index].Prenom);
             TableLayoutPanel pan = new TableLayoutPanel();
@@ -192,7 +143,7 @@ namespace Recherche_Fiche_C
         }
 
 
-
+        // FOnction qui recherche toutes les fiches dans le répertoire donné
         private void listerFiche(FileInfo[] fichiers)
         {
             string[] arr = new string[3];
@@ -241,67 +192,16 @@ namespace Recherche_Fiche_C
             }
         }
 
-        private void SearchWIndow_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void reinitButton_Click(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.URL = "null";
-            Properties.Settings.Default.FirstLunch = true;
-            Properties.Settings.Default.Save();
-            MessageBox.Show("Application reinitialisé", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            if (pathText.Text == "")
-            {
-                MessageBox.Show("Veuillez choisir un dossier.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else if (Directory.Exists(pathText.Text))
-            {
-                if (Directory.GetDirectories(pathText.Text).Length == 0 && Directory.GetFiles(pathText.Text).Length == 0)
-                {
-                    MessageBox.Show("Le répertoire est vide", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    DirectoryInfo dir = new DirectoryInfo(pathText.Text);
-                    FileInfo[] fichiers = dir.GetFiles();
-                    DirectoryInfo[] dossiers = dir.GetDirectories();
-
-                    listFiche = new List<SearchWIndow.Fiche>();
-                    listerFiche(fichiers);
-
-                    foreach (DirectoryInfo dossier in dossiers)
-                    {
-                        fichiers = dossier.GetFiles();
-                        listerFiche(fichiers);
-                    }
-
-                    Properties.Settings.Default.URL = pathText.Text;
-                        Properties.Settings.Default.Save();
-                    MessageBox.Show("Options sauvegardées", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Le répertoire n'existe pas", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+        // On redéfinie la fonction drawItem du tabcontrol afin de créer un croix qui permet de fermer l'onglet
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
-            e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
+            if (e.Index > 1)
+            {
+                e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
+            }
             e.Graphics.DrawString(this.tabControl1.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
             e.DrawFocusRectangle();
+
         }
 
         private void tabControl1_MouseDown(object sender, MouseEventArgs e)
@@ -312,21 +212,140 @@ namespace Recherche_Fiche_C
                 Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 15, 15);
                 if (closeButton.Contains(e.Location))
                 {
-                    if (i < 3)
-                    {
-                        MessageBox.Show("Impossiblde de fermet cet onglet", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    } else
+                    if (i > 1)
                     {
                         if (MessageBox.Show("Voulez-vous fermer cet onglet ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             this.tabControl1.TabPages.RemoveAt(i);
                             break;
                         }
-
                     }
-
                 }
             }
+        }
+
+        // Fonction de recherche
+        private void search(string nom, string prenom, string lieu, List<Fiche> list)
+        {
+            progressBar1.Value = 0;
+            listView1.Items.Clear();
+            resultFiche = new List<Fiche>();
+            int count = 0;
+            progressBar1.Maximum = listFiche.Count;
+            Fiche recherche = new Fiche(nom, prenom, lieu);
+            foreach (Fiche f in list)
+            {
+                progressBar1.Value++;
+                bool valid = true;
+                if (recherche.Nom != "")
+                    if (f.Nom.IndexOf(recherche.Nom, StringComparison.OrdinalIgnoreCase) < 0)
+                        valid = false;
+                if (valid)
+                {
+                    if (recherche.Prenom != "")
+                        if (f.Prenom.IndexOf(recherche.Prenom, StringComparison.OrdinalIgnoreCase) < 0)
+                            valid = false;
+                    if (valid)
+                    {
+                        if (recherche.Lieu != "")
+                            if (f.Lieu.IndexOf(recherche.Lieu, StringComparison.OrdinalIgnoreCase) < 0)
+                                valid = false;
+                        if (valid)
+                        {
+                            count++;
+                            string[] arr = new string[3];
+                            arr[NOM] = f.Nom;
+                            arr[PRENOM] = f.Prenom;
+                            arr[LIEU] = f.Lieu;
+                            resultFiche.Add(new Fiche(arr[NOM], arr[PRENOM], arr[LIEU], f.Url));
+                            ListViewItem itm = new ListViewItem(arr);
+                            listView1.Items.Add(itm);
+                        }
+                    }
+                }
+            }
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            if (count == 0)
+            {
+                MessageBox.Show("Il n'y aucun resultat", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                MessageBox.Show("Il y'a " + count + " resultat(s)", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                tabControl1.SelectedIndex = 1;
+            }
+        }
+
+        private void affineButton_Click(object sender, EventArgs e)
+        {
+            if (nomAffineText.Text != "" || prenomAffineText.Text != "" || lieuAffineText.Text != "")
+                search(nomAffineText.Text, prenomAffineText.Text, lieuAffineText.Text, resultFiche);
+        }
+
+        private void changerDeRépertoireToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void reinitialiserApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Voulez-vous reinitialiser l'application ?", "Attention", MessageBoxButtons.YesNoCancel) == DialogResult.Yes)
+            {
+                Properties.Settings.Default.URL = "null";
+                Properties.Settings.Default.FirstLunch = true;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("Application reinitialisé. \nL'application va redemarrer.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Restart();
+            }
+            
+        }
+
+        private void changerDeRépertoireToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string path;
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                path = fbd.SelectedPath;
+                if (path == "")
+                {
+                    MessageBox.Show("Veuillez choisir un dossier.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (Directory.Exists(path))
+                {
+                    if (Directory.GetDirectories(path).Length == 0 && Directory.GetFiles(path).Length == 0)
+                    {
+                        MessageBox.Show("Le répertoire est vide", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        DirectoryInfo dir = new DirectoryInfo(path);
+                        FileInfo[] fichiers = dir.GetFiles();
+                        DirectoryInfo[] dossiers = dir.GetDirectories();
+
+                        this.path = path;
+                        Properties.Settings.Default.URL = path;
+                        Properties.Settings.Default.Save();
+                        listFiche = new List<SearchWIndow.Fiche>();
+                        listerFiche(fichiers);
+
+                        foreach (DirectoryInfo dossier in dossiers)
+                        {
+                            fichiers = dossier.GetFiles();
+                            listerFiche(fichiers);
+                        }
+
+                        Properties.Settings.Default.URL = path;
+                        Properties.Settings.Default.Save();
+                        MessageBox.Show("Options sauvegardées", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+        private void répertoireActuelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Répertoire actuel:\n" + this.path, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
