@@ -84,7 +84,10 @@ namespace Recherche_Fiche_C
             // Si aucune fiche n'est trouvé
             if (listFiche.Count == 0)
             {
-                MessageBox.Show("Aucune fiche trouvé dans le répertoire choisie merci de changer de répertoire dans le menu \"Options\"", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Aucune fiche trouvé dans le répertoire ou le répertoire n'éxiste pas.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Properties.Settings.Default.URL = "null";
+                Properties.Settings.Default.Save();
+                Application.Restart();
             }
         }
 
@@ -164,7 +167,6 @@ namespace Recherche_Fiche_C
 
             tabControl1.SelectedIndex = tabControl1.TabCount - 1;
         }
-
 
         // FOnction qui recherche toutes les fiches dans le répertoire donné
         private void listerFiche(FileInfo[] fichiers)

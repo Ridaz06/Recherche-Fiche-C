@@ -75,7 +75,7 @@ namespace Recherche_Fiche_C
                 }
             } else
             {
-                MessageBox.Show("Le répertoire n'existe pas", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Le répertoire n'existe pas.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
