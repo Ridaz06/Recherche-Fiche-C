@@ -94,12 +94,6 @@
     <Compile Include="SearchWIndow.Designer.cs">
       <DependentUpon>SearchWIndow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Splashscreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Splashscreen.Designer.cs">
-      <DependentUpon>Splashscreen.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,9 +111,6 @@
     </Compile>
     <EmbeddedResource Include="SearchWIndow.resx">
       <DependentUpon>SearchWIndow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Splashscreen.resx">
-      <DependentUpon>Splashscreen.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

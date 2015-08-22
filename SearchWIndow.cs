@@ -54,6 +54,7 @@ namespace Recherche_Fiche_C
         private const int LIEU = 2;
         private const int URL = 3;
 
+
         private const string VFICHE = "Voir la fiche";
 
         public SearchWIndow()
@@ -114,61 +115,9 @@ namespace Recherche_Fiche_C
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
+            openBitmap(listView1.SelectedItems[0].Index, OBR_RESULT);
 
-            ficheImage = new Bitmap(resultFiche[listView1.SelectedItems[0].Index].Url);
-            originalBitmap = ficheImage;
-            originalHeight = ficheImage.Height;
-            originalWidth = ficheImage.Width;
-
-            // Creation d'un bouton permetant d'enregistrer l'image
-            Button but = new Button();
-            but.Text = "Enregistrer l'image";
-            but.AutoSize = true;
-            but.Anchor = AnchorStyles.None;
-            but.Click += (s, ee) =>
-            {
-                SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Filter = "JPG  Image |*.jpg";
-                sfd.Title = "Sauvegarder la fiche";
-                sfd.FileName = resultFiche[listView1.SelectedItems[0].Index].Nom
-                + "_" + resultFiche[listView1.SelectedItems[0].Index].Prenom
-                + "_" + resultFiche[listView1.SelectedItems[0].Index].Lieu;
-                sfd.RestoreDirectory = true;
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    
-                    ficheImage.Save(sfd.OpenFile(), System.Drawing.Imaging.ImageFormat.Jpeg);
-                }
-            };
-
-            // Creation d'un nouvelle onglet
-            TabPage picTab = new TabPage("Fiche: " + "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom
-                + " | Prenom: " + resultFiche[listView1.SelectedItems[0].Index].Prenom);
-            TableLayoutPanel pan = new TableLayoutPanel();
-            pan.Dock = DockStyle.Fill;
-            pan.ColumnStyles.Add(new ColumnStyle(SizeType.Percent));
-
-            pan.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            Label text = new Label();
-            text.Text = "Nom: " + resultFiche[listView1.SelectedItems[0].Index].Nom
-                + " | Prenom: " + resultFiche[listView1.SelectedItems[0].Index].Prenom
-                + " | Lieu: " + resultFiche[listView1.SelectedItems[0].Index].Lieu;
-            text.TextAlign = ContentAlignment.MiddleCenter;
-            text.Dock = DockStyle.Fill;
-            pan.Controls.Add(text, 1, pan.RowCount - 1);
-            pan.Controls.Add(but, 1, pan.RowCount - 1);
-
-            PictureBox picBox = new PictureBox();
-            picBox.Dock = DockStyle.Fill;
-            picBox.SizeMode = PictureBoxSizeMode.Zoom;
-            picBox.Image = ficheImage;
-
-            pan.Controls.Add(picBox);
-
-            picTab.Controls.Add(pan);
-            tabControl1.TabPages.Add(picTab);
-
-            tabControl1.SelectedIndex = tabControl1.TabCount - 1;
+            
         }
 
         // FOnction qui recherche toutes les fiches dans le répertoire donné
@@ -313,7 +262,8 @@ namespace Recherche_Fiche_C
 
         private void changerDeRépertoireToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            if (MessageBox.Show("Voulez-vous quitter ?", "Attention", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+                Application.Exit();
         }
 
         private void reinitialiserApplicationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -395,6 +345,18 @@ namespace Recherche_Fiche_C
                 listViewList[i].Dock = DockStyle.Fill;
                 listViewList[i].View = View.Details;
                 listViewList[i].FullRowSelect = true;
+
+                listViewList[i].DoubleClick += (s, ee) =>
+                {
+                    char cIndex = (char)listeFicheTab.SelectedIndex;
+                    int count = 0;
+                    for (int j = 0; j < cIndex; j++)
+                    {
+                        count += listViewList[j].Items.Count;
+                    }
+                    count += listViewList[cIndex].SelectedItems[0].Index;
+                    openBitmap(count, OBR_LIST);
+                };
                 i++;
             }
 
@@ -413,6 +375,76 @@ namespace Recherche_Fiche_C
 
             for (int c = 'A'; c <= 'Z'; c++)
                 listViewList[c - 65].AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+        }
+
+        /* Affiche une fiche en fonction du mode voulue:
+        OBR_RESULT: dans les resultats d'une recherche précédente
+        OBR_LIST: dans la liste total des fiches trouvées
+    */
+        private const int OBR_RESULT = 0;
+        private const int OBR_LIST = 1;
+        void openBitmap(int index, int mode)
+        {
+            Fiche f;
+            if (mode == OBR_RESULT)
+                f = resultFiche[index];
+            else
+                f = listFiche[index]; 
+            ficheImage = new Bitmap(f.Url);
+            originalBitmap = ficheImage;
+            originalHeight = ficheImage.Height;
+            originalWidth = ficheImage.Width;
+
+            // Creation d'un bouton permetant d'enregistrer l'image
+            Button but = new Button();
+            but.Text = "Enregistrer l'image";
+            but.AutoSize = true;
+            but.Anchor = AnchorStyles.None;
+            but.Click += (s, ee) =>
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "JPG  Image |*.jpg";
+                sfd.Title = "Sauvegarder la fiche";
+                sfd.FileName = f.Nom
+                + "_" + f.Prenom
+                + "_" + f.Lieu;
+                sfd.RestoreDirectory = true;
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    
+                    ficheImage.Save(sfd.OpenFile(), System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+            };
+
+            // Creation d'un nouvelle onglet
+            TabPage picTab = new TabPage("Fiche: " + "Nom: " + f.Nom
+                + " | Prenom: " + f.Prenom);
+            TableLayoutPanel pan = new TableLayoutPanel();
+            pan.Dock = DockStyle.Fill;
+            pan.ColumnStyles.Add(new ColumnStyle(SizeType.Percent));
+
+            pan.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            Label text = new Label();
+            text.Text = "Nom: " + f.Nom
+                + " | Prenom: " + f.Prenom
+                + " | Lieu: " + f.Lieu;
+            text.TextAlign = ContentAlignment.MiddleCenter;
+            text.Dock = DockStyle.Fill;
+            pan.Controls.Add(text, 1, pan.RowCount - 1);
+            pan.Controls.Add(but, 1, pan.RowCount - 1);
+
+            PictureBox picBox = new PictureBox();
+            picBox.Dock = DockStyle.Fill;
+            picBox.SizeMode = PictureBoxSizeMode.Zoom;
+            picBox.Image = ficheImage;
+
+            pan.Controls.Add(picBox);
+
+            picTab.Controls.Add(pan);
+            tabControl1.TabPages.Add(picTab);
+
+            tabControl1.SelectedIndex = tabControl1.TabCount - 1;
+
         }
     }
 }

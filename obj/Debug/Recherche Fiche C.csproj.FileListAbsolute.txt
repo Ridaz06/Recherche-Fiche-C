@@ -13,4 +13,3 @@ C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche
 C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\bin\Debug\Recherche Fiche C.application
 C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche Fiche C.exe.manifest
 C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche Fiche C.application
-C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Debug\Recherche_Fiche_C.Splashscreen.resources
