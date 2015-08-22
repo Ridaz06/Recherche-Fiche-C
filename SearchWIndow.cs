@@ -42,6 +42,7 @@ namespace Recherche_Fiche_C
         private List<Fiche> listFiche;
         private List<Fiche> resultFiche;
         private List<ListView> listViewList;
+        private List<List<Fiche>> listTabAlpha;
         private Bitmap ficheImage;
         private Bitmap originalBitmap;
         private string path;
@@ -93,6 +94,68 @@ namespace Recherche_Fiche_C
                 Application.Restart();
             }
            
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Thread t = new Thread(new ThreadStart(ThreadLoop));
+            t.Start();
+
+            listTabAlpha = new List<List<Fiche>>();
+            for (int j = 0; j < 28; j++)
+            {
+                listTabAlpha.Add(new List<Fiche>());
+            }
+            timer1.Enabled = false;
+            int i = 0;
+            listViewList = new List<ListView>();
+            for (char c = 'A'; c <= 'Z'; c++)
+            {
+                listViewList.Add(new ListView());
+                TabPage tab = new TabPage(c.ToString());
+                tab.Controls.Add(listViewList[i]);
+                listeFicheTab.TabPages.Add(tab);
+
+                listViewList[i].Columns.Add("Nom");
+                listViewList[i].Columns.Add("Prenom");
+                listViewList[i].Columns.Add("Lieu");
+                listViewList[i].Dock = DockStyle.Fill;
+                listViewList[i].View = View.Details;
+                listViewList[i].FullRowSelect = true;
+
+                listViewList[i].DoubleClick += (s, ee) =>
+                {
+                    char cIndex = (char)listeFicheTab.SelectedIndex;
+                    int count = 0;
+                    count += listViewList[cIndex].SelectedItems[0].Index;
+                    openBitmap(count, OBR_LIST, listTabAlpha[cIndex]);
+                };
+                i++;
+            }
+
+            foreach (Fiche f in listFiche)
+            {
+                char c = f.Nom.ToUpper().ElementAt(0);
+                int index = c - 65;
+                listTabAlpha[index].Add(f);
+                string[] arr = new string[3];
+                arr[NOM] = f.Nom;
+                arr[PRENOM] = f.Prenom;
+                arr[LIEU] = f.Lieu;
+
+                ListViewItem itm = new ListViewItem(arr);
+                listViewList[index].Items.Add(itm);
+            }
+
+            for (int c = 'A'; c <= 'Z'; c++)
+                listViewList[c - 65].AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            t.Abort();
+
+        }
+        private void ThreadLoop()
+        {
+            Splashscreen w = new Splashscreen();
+            w.ShowDialog();
         }
 
 
@@ -172,7 +235,7 @@ namespace Recherche_Fiche_C
         // On redéfinie la fonction drawItem du tabcontrol afin de créer un croix qui permet de fermer l'onglet
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
-            if (e.Index > 1)
+            if (e.Index > 2)
             {
                 e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
             }
@@ -190,7 +253,7 @@ namespace Recherche_Fiche_C
                 if (closeButton.Contains(e.Location))
                 {
                     //Si ce n'est pas l'onglet de recherche ou de resultat on demande la confirmation de la fermeture
-                    if (i > 1)
+                    if (i > 2)
                     {
                         if (MessageBox.Show("Voulez-vous fermer cet onglet ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
@@ -330,51 +393,7 @@ namespace Recherche_Fiche_C
         private void SearchWIndow_Shown(object sender, EventArgs e)
         {
 
-            int i = 0;
-            listViewList = new List<ListView>();
-            for (char c = 'A'; c <= 'Z'; c++)
-            {
-                listViewList.Add(new ListView());
-                TabPage tab = new TabPage(c.ToString());
-                tab.Controls.Add(listViewList[i]);
-                listeFicheTab.TabPages.Add(tab);
-
-                listViewList[i].Columns.Add("Nom");
-                listViewList[i].Columns.Add("Prenom");
-                listViewList[i].Columns.Add("Lieu");
-                listViewList[i].Dock = DockStyle.Fill;
-                listViewList[i].View = View.Details;
-                listViewList[i].FullRowSelect = true;
-
-                listViewList[i].DoubleClick += (s, ee) =>
-                {
-                    char cIndex = (char)listeFicheTab.SelectedIndex;
-                    int count = 0;
-                    for (int j = 0; j < cIndex; j++)
-                    {
-                        count += listViewList[j].Items.Count;
-                    }
-                    count += listViewList[cIndex].SelectedItems[0].Index;
-                    openBitmap(count, OBR_LIST);
-                };
-                i++;
-            }
-
-            foreach (Fiche f in listFiche)
-            {
-                char c = f.Nom.ToUpper().ElementAt(0);
-                int index = c - 65;
-                string[] arr = new string[3];
-                arr[NOM] = f.Nom;
-                arr[PRENOM] = f.Prenom;
-                arr[LIEU] = f.Lieu;
-
-                ListViewItem itm = new ListViewItem(arr);
-                listViewList[index].Items.Add(itm);
-            }
-
-            for (int c = 'A'; c <= 'Z'; c++)
-                listViewList[c - 65].AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+           
         }
 
         /* Affiche une fiche en fonction du mode voulue:
@@ -383,13 +402,21 @@ namespace Recherche_Fiche_C
     */
         private const int OBR_RESULT = 0;
         private const int OBR_LIST = 1;
-        void openBitmap(int index, int mode)
+        void openBitmap(int index, int mode, List<Fiche> list = null)
         {
+
             Fiche f;
-            if (mode == OBR_RESULT)
-                f = resultFiche[index];
-            else
-                f = listFiche[index]; 
+            if (list == null)
+            {
+                if (mode == OBR_RESULT)
+                    f = resultFiche[index];
+                else
+                    f = listFiche[index];
+            } else
+            {
+                f = list[index];
+            }
+
             ficheImage = new Bitmap(f.Url);
             originalBitmap = ficheImage;
             originalHeight = ficheImage.Height;
@@ -445,6 +472,21 @@ namespace Recherche_Fiche_C
 
             tabControl1.SelectedIndex = tabControl1.TabCount - 1;
 
+        }
+
+
+        private void fermerToutesLesFichesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Voulez-vous fermer toutes les fiches ?", "Attention", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (tabControl1.TabPages.Count > 3)
+                {
+                    while(tabControl1.TabCount > 3)
+                    {
+                        tabControl1.TabPages.RemoveAt(tabControl1.TabCount - 1);
+                    }
+                }
+            }
         }
     }
 }

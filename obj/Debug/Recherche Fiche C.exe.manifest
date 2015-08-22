@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Recherche Fiche C.exe" size="33280">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Recherche Fiche C.exe" size="35840">
       <assemblyIdentity name="Recherche Fiche C" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>XLSzLnCb5lXPyl1x8vH9oCIvWwC7QFz4lJw6mD3qJik=</dsig:DigestValue>
+        <dsig:DigestValue>AYHVic9Nd2+X9YYoqhx04P4IyP16Pj12MlpDC4rF6xs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -53,6 +54,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.listeFicheTab = new System.Windows.Forms.TabControl();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,8 +64,8 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changerDeRépertoireToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.reinitialiserApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.listeFicheTab = new System.Windows.Forms.TabControl();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.fermerToutesLesFichesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.searchTab.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -71,9 +74,9 @@
             this.resultTab.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.affineGroupBox.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -106,6 +109,7 @@
             // 
             // tableLayoutPanel3
             // 
+            this.tableLayoutPanel3.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 0);
@@ -368,6 +372,25 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Nom:";
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.listeFicheTab);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(568, 402);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Liste des fiches";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // listeFicheTab
+            // 
+            this.listeFicheTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listeFicheTab.Location = new System.Drawing.Point(0, 0);
+            this.listeFicheTab.Name = "listeFicheTab";
+            this.listeFicheTab.SelectedIndex = 0;
+            this.listeFicheTab.Size = new System.Drawing.Size(568, 402);
+            this.listeFicheTab.TabIndex = 0;
+            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 1;
@@ -422,7 +445,8 @@
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changerDeRépertoireToolStripMenuItem1,
-            this.reinitialiserApplicationToolStripMenuItem});
+            this.reinitialiserApplicationToolStripMenuItem,
+            this.fermerToutesLesFichesToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -430,35 +454,28 @@
             // changerDeRépertoireToolStripMenuItem1
             // 
             this.changerDeRépertoireToolStripMenuItem1.Name = "changerDeRépertoireToolStripMenuItem1";
-            this.changerDeRépertoireToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.changerDeRépertoireToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
             this.changerDeRépertoireToolStripMenuItem1.Text = "Changer de répertoire";
             this.changerDeRépertoireToolStripMenuItem1.Click += new System.EventHandler(this.changerDeRépertoireToolStripMenuItem1_Click);
             // 
             // reinitialiserApplicationToolStripMenuItem
             // 
             this.reinitialiserApplicationToolStripMenuItem.Name = "reinitialiserApplicationToolStripMenuItem";
-            this.reinitialiserApplicationToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.reinitialiserApplicationToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.reinitialiserApplicationToolStripMenuItem.Text = "Reinitialiser application";
             this.reinitialiserApplicationToolStripMenuItem.Click += new System.EventHandler(this.reinitialiserApplicationToolStripMenuItem_Click);
             // 
-            // tabPage1
+            // timer1
             // 
-            this.tabPage1.Controls.Add(this.listeFicheTab);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(568, 402);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Liste des fiches";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // listeFicheTab
+            // fermerToutesLesFichesToolStripMenuItem
             // 
-            this.listeFicheTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listeFicheTab.Location = new System.Drawing.Point(0, 0);
-            this.listeFicheTab.Name = "listeFicheTab";
-            this.listeFicheTab.SelectedIndex = 0;
-            this.listeFicheTab.Size = new System.Drawing.Size(568, 402);
-            this.listeFicheTab.TabIndex = 0;
+            this.fermerToutesLesFichesToolStripMenuItem.Name = "fermerToutesLesFichesToolStripMenuItem";
+            this.fermerToutesLesFichesToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.fermerToutesLesFichesToolStripMenuItem.Text = "Fermer toutes les fiches";
+            this.fermerToutesLesFichesToolStripMenuItem.Click += new System.EventHandler(this.fermerToutesLesFichesToolStripMenuItem_Click);
             // 
             // SearchWIndow
             // 
@@ -483,11 +500,11 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.affineGroupBox.ResumeLayout(false);
             this.affineGroupBox.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -529,5 +546,7 @@
         private System.Windows.Forms.ToolStripMenuItem répertoireActuelToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabControl listeFicheTab;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem fermerToutesLesFichesToolStripMenuItem;
     }
 }

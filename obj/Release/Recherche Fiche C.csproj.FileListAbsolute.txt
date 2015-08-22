@@ -8,8 +8,8 @@ c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche
 c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Release\Recherche Fiche C.pdb
 c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Release\Recherche_Fiche_C.loadingScreen.resources
 c:\users\ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Release\Recherche_Fiche_C.SearchWIndow.resources
-C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Release\Recherche Fiche C.csprojResolveAssemblyReference.cache
 C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\bin\Release\Recherche Fiche C.exe.manifest
 C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\bin\Release\Recherche Fiche C.application
 C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Release\Recherche Fiche C.exe.manifest
 C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Release\Recherche Fiche C.application
+C:\Users\Ridaz\documents\visual studio 2015\Projects\Recherche Fiche C\Recherche Fiche C\obj\Release\Recherche_Fiche_C.Splashscreen.resources

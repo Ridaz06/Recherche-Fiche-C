@@ -83,18 +83,25 @@ namespace Recherche_Fiche_C
         }
 
 
-        protected override void OnPaint(PaintEventArgs e)
+        private void loadingScreen_Shown(object sender, EventArgs e)
         {
-            base.OnPaint(e);
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] fichiers = dir.GetFiles();
             DirectoryInfo[] dossiers = dir.GetDirectories();
 
+            progressBar1.Maximum = dir.GetDirectories().Length;
             listFiche = new List<SearchWIndow.Fiche>();
             listerFiche(fichiers);
 
             foreach (DirectoryInfo dossier in dossiers)
             {
+                progressBar1.Value++;
                 fichiers = dossier.GetFiles();
                 listerFiche(fichiers);
             }
@@ -102,10 +109,6 @@ namespace Recherche_Fiche_C
             SearchWIndow w = new SearchWIndow(path, listFiche);
             this.Hide();
             w.ShowDialog();
-        }
-        private void loadingScreen_Shown(object sender, EventArgs e)
-        {
-
         }
     }
 }
