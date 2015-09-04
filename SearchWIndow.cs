@@ -152,12 +152,12 @@ namespace Recherche_Fiche_C
             t.Abort();
 
         }
-        // Thread qui sert à afficher le splashscreen au lancement
         private void ThreadLoop()
         {
             Splashscreen w = new Splashscreen();
             w.ShowDialog();
         }
+
 
         private void SearchWIndow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -237,7 +237,7 @@ namespace Recherche_Fiche_C
         {
             if (e.Index > 2)
             {
-                e.Graphics.DrawString("x", e.Font, Brushes.Red, e.Bounds.Right - 15, e.Bounds.Top + 4);
+                e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
             }
             e.Graphics.DrawString(this.tabControl1.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
             e.DrawFocusRectangle();
@@ -399,8 +399,6 @@ namespace Recherche_Fiche_C
         /* Affiche une fiche en fonction du mode voulue:
         OBR_RESULT: dans les resultats d'une recherche précédente
         OBR_LIST: dans la liste total des fiches trouvées
-
-        On peut passer en argument une liste
     */
         private const int OBR_RESULT = 0;
         private const int OBR_LIST = 1;
